@@ -28,7 +28,7 @@ export const otpVerify = async (req, res) => {
 export const singUp = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    console.log(req.body)
+   
     const isAlreadexit = await User.findOne({ email });
     if (isAlreadexit) {
       return res.status(400).json({ message: "User Already Exits" });
@@ -52,12 +52,12 @@ export const singUp = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     await user.save();
-    res.status(201).json(user);
+    res.status(201).json({user,token});
   } catch (err) {
     return res.status(500).json({ message: `SingupError ${err}` });
   }
