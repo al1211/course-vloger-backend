@@ -3,6 +3,8 @@ import getToken from "../config/token.js";
 import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 import validator from "validator";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const otpVerify = async (req, res) => {
   try {
@@ -52,7 +54,7 @@ export const singUp = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
+     secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
