@@ -26,10 +26,6 @@ try {
     return null
 }
 }
-console.log("Cloudinary ENV:", {
-  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
-  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET ? "✅ Loaded" : "❌ Missing"
-});
+
 
 export default uplodaOnCd

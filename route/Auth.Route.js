@@ -3,7 +3,7 @@ import { googleAuth, login, logout, otpVerify, resetPassword, senOTP, singUp } f
 
 const authRouter = express.Router();
 
-authRouter.post("/singup", singUp);
+authRouter.post("/signup", singUp);
 authRouter.post("/login", login);
 authRouter.post("/logout", logout);
 authRouter.post("/sendotp", senOTP);
