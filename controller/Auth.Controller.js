@@ -48,7 +48,7 @@ export const singUp = async (req, res) => {
       password: hashPassword,
       role,
     });
-    let token = await getToken(User._id);
+    let token = await getToken(user._id);
 
     res.cookie("token", token, {
       httpOnly: true,
