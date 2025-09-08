@@ -12,7 +12,7 @@ const isAuth=async(req,res,next)=>{
         }
         let verify=await jwt.verify(token,process.env.JWT_SECRET) ;
 
-        console.log("token vrify",verify);
+      
         if(!verify){
             return res.status(400).json({message:"User does not valid token"});
         }

@@ -4,7 +4,7 @@ import Courses from "../models/Course.model.js";
 export const createCourse = async (req, res) => {
   try {
     const { title, category } = req.body;
-    console.log(req.body);
+  
     if (!title || !category) {
       return res.status(400).json({ message: "title or category is required" });
     }
@@ -55,8 +55,7 @@ export const editCourses=async(req,res)=>{
     try{
       const {courseId}=req.params;
       const {title,subtitle,description,catrgory,level,price,isPublished}=req.body;
-      console.log(req.body);
-      console.log(req.file)
+      
       let thumbnail;
       if(req.file){
         thumbnail=await uplodaOnCd(req.file.path)
@@ -82,7 +81,7 @@ export const editCourses=async(req,res)=>{
 export const getCoursebyId=async(req,res)=>{
     try {
         const {courseId}=req.params;
-        console.log("funciotn calling ",courseId);
+       
      
         let course=await Courses.findById(courseId);
         console.log(course);
