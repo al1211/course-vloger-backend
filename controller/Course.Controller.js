@@ -1,5 +1,5 @@
-import uplodaOnCd from "../config/Cloudniary.js";
 import Courses from "../models/Course.model.js";
+import uploadOnCloudinary from "../utils/uploadCloudnairy.js";
 
 export const createCourse = async (req, res) => {
   try {
@@ -51,31 +51,41 @@ export const getCreatorCourses=async(req,res)=>{
 };
 
 
-export const editCourses=async(req,res)=>{
-    try{
-      const {courseId}=req.params;
-      const {title,subtitle,description,catrgory,level,price,isPublished}=req.body;
-      
-      let thumbnail;
-      if(req.file){
-        thumbnail=await uplodaOnCd(req.file.path)
-      }
-      console.log("thumbanil",thumbnail);
-      let course=await Courses.findById(courseId);
-      if(!course){
-        return res.status(400).json({message:"Course is not found"});
-      }
-     const updateData={title,subtitle,description,catrgory,level,price,isPublished,thumbnail};
-     
+export const editCourses = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { title, subtitle, description, catrgory, level, price, isPublished } = req.body;
 
-     course=await Courses.findByIdAndUpdate(courseId,updateData,{new:true});
-
-     res.status(201).json(course);
-    }catch(err){
-   console.log(err);
-   return res.status(500).json({message:"edit course error"});
+    let thumbnail;
+    if (req.file) {
+      thumbnail = await uploadOnCloudinary(req.file.buffer); // buffer not path
     }
-}
+
+    let course = await Courses.findById(courseId);
+    if (!course) {
+      return res.status(400).json({ message: "Course not found" });
+    }
+
+    const updateData = {
+      title,
+      subtitle,
+      description,
+      catrgory,
+      level,
+      price,
+      isPublished,
+      ...(thumbnail && { thumbnail }), // only add if exists
+    };
+    console.log(updateData)
+
+    course = await Courses.findByIdAndUpdate(courseId, updateData, { new: true });
+
+    res.status(201).json(course);
+  } catch (err) {
+    console.error("Edit course error:", err);
+    return res.status(500).json({ message: "edit course error" });
+  }
+};
 
 
 export const getCoursebyId=async(req,res)=>{

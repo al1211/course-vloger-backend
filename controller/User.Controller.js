@@ -1,4 +1,4 @@
-import uplodaOnCd from "../config/Cloudniary.js";
+import uploadOnCloudinary from "../utils/uploadCloudnairy.js";
 import User from "../models/User.model.js";
 
 export const getCurrentUser = async (req, res) => {
@@ -19,7 +19,7 @@ export const updateProife=async(req,res)=>{
     const {description,name}=req.body;
     let photoUrl;
     if(req.file){
-      photoUrl=await uplodaOnCd(req.file.path)
+      photoUrl=await uploadOnCloudinary(req.file.path)
     }  
     const user=await User.findByIdAndUpdate(userid,{name,description,photoUrl});
 
